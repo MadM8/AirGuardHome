@@ -1,0 +1,30 @@
+{
+  "project_info": {
+    "project_number": "339794104760",
+    "firebase_url": "https://airguardfire-default-rtdb.firebaseio.com",
+    "project_id": "airguardfire",
+    "storage_bucket": "airguardfire.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:339794104760:android:8853b9c09e0d0b7a1bbf4d",
+        "android_client_info": {
+          "package_name": "com.example.air_guard"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA3iObK4JTysERoYKUXzQgPoXCqeW0VG1A"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
