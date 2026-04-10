@@ -14,12 +14,12 @@ class _FirstState extends State<First> {
   int _selectedIndex = 0;
 
   void _navigateBottomBar(int index){
-    setState(() {
+    setState (() {
       _selectedIndex = index;
     });
   }
 
-  final List _page = [Home(), Devices(), Thermostat()];
+  final List _page = [Home(), Devices(), Thermostat(), settings(),];
 
   @override
   Widget build(BuildContext context) {
@@ -47,9 +47,20 @@ class _FirstState extends State<First> {
           BottomNavigationBarItem(
             icon: Icon(Icons.device_thermostat_outlined),
             label: 'Thermostat',
-            )
+            ),
+          
+          BottomNavigationBarItem(
+            icon: Icon(Icons.settings_accessibility_outlined),
+            label: 'Settings',
+            ),
+             
+
         ]
       ),
     );
   }
+}
+
+// ignore: camel_case_types
+class settings {
 }
