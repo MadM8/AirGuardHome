@@ -1,5 +1,5 @@
 import 'package:air_guard/pages/fourth.dart';
-import 'package:air_guard/pages/second.dart';
+import 'package:air_guard/pages/devices_screen.dart';
 import 'package:air_guard/pages/third.dart';
 import 'package:flutter/material.dart';
 
@@ -19,7 +19,7 @@ class _FirstState extends State<First> {
     });
   }
 
-  final List _page = [Home(), Devices(), Thermostat()];
+  final List _page = [Home(), DevicesScreen(), Thermostat()];
 
   @override
   Widget build(BuildContext context) {

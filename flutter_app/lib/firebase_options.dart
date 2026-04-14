@@ -67,6 +67,7 @@ class DefaultFirebaseOptions {
     projectId: 'airguardfire',
     databaseURL: 'https://airguardfire-default-rtdb.firebaseio.com',
     storageBucket: 'airguardfire.firebasestorage.app',
+    iosClientId: '339794104760-037pst9rdifdll2lgm08al3jpfm4qpub.apps.googleusercontent.com',
     iosBundleId: 'com.example.airGuard',
   );
 
@@ -77,6 +78,7 @@ class DefaultFirebaseOptions {
     projectId: 'airguardfire',
     databaseURL: 'https://airguardfire-default-rtdb.firebaseio.com',
     storageBucket: 'airguardfire.firebasestorage.app',
+    iosClientId: '339794104760-037pst9rdifdll2lgm08al3jpfm4qpub.apps.googleusercontent.com',
     iosBundleId: 'com.example.airGuard',
   );
 
@@ -90,4 +92,5 @@ class DefaultFirebaseOptions {
     storageBucket: 'airguardfire.firebasestorage.app',
     measurementId: 'G-JNTW137YBR',
   );
+
 }

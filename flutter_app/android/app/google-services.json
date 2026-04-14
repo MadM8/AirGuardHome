@@ -13,7 +13,12 @@
           "package_name": "com.example.air_guard"
         }
       },
-      "oauth_client": [],
+      "oauth_client": [
+        {
+          "client_id": "339794104760-uuj5e8mvcnl5pv0n7pdihbovirj1kbhi.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
       "api_key": [
         {
           "current_key": "AIzaSyA3iObK4JTysERoYKUXzQgPoXCqeW0VG1A"
@@ -21,7 +26,19 @@
       ],
       "services": {
         "appinvite_service": {
-          "other_platform_oauth_client": []
+          "other_platform_oauth_client": [
+            {
+              "client_id": "339794104760-uuj5e8mvcnl5pv0n7pdihbovirj1kbhi.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "339794104760-037pst9rdifdll2lgm08al3jpfm4qpub.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.airGuard"
+              }
+            }
+          ]
         }
       }
     }
