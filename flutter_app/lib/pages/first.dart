@@ -2,6 +2,8 @@ import 'package:air_guard/pages/fourth.dart';
 import 'package:air_guard/pages/second.dart';
 import 'package:air_guard/pages/third.dart';
 import 'package:flutter/material.dart';
+import 'package:air_guard/pages/settings.dart'; 
+
 
 class First extends StatefulWidget {
   const First({super.key});
@@ -19,13 +21,13 @@ class _FirstState extends State<First> {
     });
   }
 
-  final List _page = [Home(), Devices(), Thermostat(), settings(),];
+  final List _page = [Home(), Devices(), Thermostat(), Settings()];
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("A I R G U A R D  H O M E", style: TextStyle(color: Colors.white)),
+        title: Text("AirGuard Home", style: TextStyle(color: Colors.white)),
         centerTitle: true,
         backgroundColor: const Color.fromARGB(255, 48, 117, 152),
       ),
@@ -61,6 +63,3 @@ class _FirstState extends State<First> {
   }
 }
 
-// ignore: camel_case_types
-class settings {
-}
