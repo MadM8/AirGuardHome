@@ -1,9 +1,11 @@
 #include <Arduino.h>
 #include <DHT.h>
 #include <WiFi.h>
+#include <Wire.h>
 #include <Firebase_ESP_Client.h>
 #include "addons/TokenHelper.h"
 #include "addons/RTDBHelper.h"
+#include "Adafruit_SGP30.h"
 
 #define DHTPIN 4      // GPIO pin connected to DHT22 DATA
 #define DHTTYPE DHT22 // Sensor type
@@ -23,13 +25,25 @@ FirebaseData fbdo;
 FirebaseAuth auth;
 FirebaseConfig config;
 DHT dht(DHTPIN, DHTTYPE);
+Adafruit_SGP30 sgp;
 
+//function definition 
+uint32_t getAbsoluteHumidity(float temperature, float humidity) {
+  // Implementation for calculating absolute humidity
+  const float absoluteHumidity = 216.7f * ((humidity / 100.0f) * 6.112f * exp((17.62f * temperature) / (243.12f + temperature))) / (273.15f + temperature);
+  const uint32_t absoluteHumidityScaled = static_cast<uint32_t>(absoluteHumidity * 1000.0f); // Scale to mg/m³
+  return absoluteHumidityScaled;
+}
 
 void setup()
 {
   // put your setup code here, to run once:
   Serial.begin(115200);
   dht.begin();
+  if (!sgp.begin()){
+    Serial.println("Sensor not found :(");
+    while(1);
+  }
   Serial.println("ESP32 DHT22 Node Ready");
     // Connect to WiFi
     WiFi.begin(WIFI_SSID, WIFI_PASSWORD);
@@ -72,15 +86,24 @@ void loop() {
     Serial.println("ERROR: Humidity out of range, skipping...");
     return;
   }
+  sgp.setHumidity(getAbsoluteHumidity(temperature, humidity));
+  if (! sgp.IAQmeasure()){
+    Serial.println("Failed to perform IAQ measurement");
+    return;
+  }
+
 
   Serial.printf("Temp: %.2f°C | Humidity: %.2f%% | Heat Index: %.2f°C\n",
                 temperature, humidity, heatIndex);
-
+  
+  Serial.printf("eCO2: %d ppm | TVOC: %d ppb\n", sgp.eCO2, sgp.TVOC);
   // Only send if Firebase is ready
   if (Firebase.ready()) {
     bool tempOk = Firebase.RTDB.setFloat(&fbdo, "/airguard/temperature", temperature);
     bool humOk  = Firebase.RTDB.setFloat(&fbdo, "/airguard/humidity", humidity);
     bool hiOk   = Firebase.RTDB.setFloat(&fbdo, "/airguard/heatIndex", heatIndex);
+    bool eco2Ok = Firebase.RTDB.setInt(&fbdo, "/airguard/eco2", sgp.eCO2);
+    bool tvocOk = Firebase.RTDB.setInt(&fbdo, "/airguard/tvoc", sgp.TVOC);
 
     if (tempOk && humOk && hiOk) {
       Serial.println("Firebase updated successfully");
@@ -90,6 +113,14 @@ void loop() {
       if (!tempOk) Serial.println("Temp failed: " + fbdo.errorReason());
       if (!humOk)  Serial.println("Humidity failed: " + fbdo.errorReason());
       if (!hiOk)   Serial.println("Heat Index failed: " + fbdo.errorReason());
+    }
+
+    if (eco2Ok && tvocOk) {
+      Serial.println("Firebase (SGP30 Data) updated successfully");
+      Serial.printf("Sent → eCO2: %d ppm | TVOC: %d ppb\n", sgp.eCO2, sgp.TVOC);
+    } else {
+      if (!eco2Ok) Serial.println("eCO2 failed: " + fbdo.errorReason());
+      if (!tvocOk) Serial.println("TVOC failed: " + fbdo.errorReason());
     }
   }
 }
