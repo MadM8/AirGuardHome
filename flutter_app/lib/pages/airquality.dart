@@ -67,21 +67,25 @@ class AirQuality extends StatelessWidget {
         final map = Map<dynamic, dynamic>.from(
             snapshot.data!.snapshot.value as Map);
 
+        // Data is nested under 'gas' and 'airquality' keys
+        final gas = Map<dynamic, dynamic>.from(map['gas'] ?? {});
+        final aq  = Map<dynamic, dynamic>.from(map['airquality'] ?? {});
+
         final data = AirQualityData(
-          // SGP30 fields
-          eco2:         (map['eco2']          ?? 400).toDouble(),
-          tvoc:         (map['tvoc']          ?? 0).toDouble(),
-          // PMSA003I concentration fields
-          pm10:         (map['pm10']          ?? 0).toDouble(),   // PM1.0
-          pm25:         (map['pm25']          ?? 0).toDouble(),   // PM2.5
-          pm100:        (map['pm100']         ?? 0).toDouble(),   // PM10
-          // PMSA003I particle count fields
-          particles03:  (map['particles_03']  ?? 0).toInt(),
-          particles05:  (map['particles_05']  ?? 0).toInt(),
-          particles10:  (map['particles_10']  ?? 0).toInt(),
-          particles25:  (map['particles_25']  ?? 0).toInt(),
-          particles50:  (map['particles_50']  ?? 0).toInt(),
-          particles100: (map['particles_100'] ?? 0).toInt(),
+          // SGP30 — nested under 'gas'
+          eco2:         (gas['eco2_ppm']         ?? 400).toDouble(),
+          tvoc:         (gas['tvoc_ppb']         ?? 0).toDouble(),
+          // PMSA003I concentrations — nested under 'airquality'
+          pm10:         (aq['pm1_0_standard']    ?? 0).toDouble(),   // PM1.0
+          pm25:         (aq['pm2_5_standard']    ?? 0).toDouble(),   // PM2.5
+          pm100:        (aq['pm10_standard']     ?? 0).toDouble(),   // PM10
+          // PMSA003I particle counts — nested under 'airquality'
+          particles03:  (aq['particles_03um']    ?? 0).toInt(),
+          particles05:  (aq['particles_05um']    ?? 0).toInt(),
+          particles10:  (aq['particles_10um']    ?? 0).toInt(),
+          particles25:  (aq['particles_25um']    ?? 0).toInt(),
+          particles50:  (aq['particles_50um']    ?? 0).toInt(),
+          particles100: (aq['particles_100um']   ?? 0).toInt(),
           updatedAt: DateTime.now(),
         );
 

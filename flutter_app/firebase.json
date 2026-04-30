@@ -1,1 +1,33 @@
-{"flutter":{"platforms":{"android":{"default":{"projectId":"airguardfire","appId":"1:339794104760:android:8853b9c09e0d0b7a1bbf4d","fileOutput":"android/app/google-services.json"}},"dart":{"lib/firebase_options.dart":{"projectId":"airguardfire","configurations":{"android":"1:339794104760:android:8853b9c09e0d0b7a1bbf4d","ios":"1:339794104760:ios:e5c2ba816967b2011bbf4d","macos":"1:339794104760:ios:e5c2ba816967b2011bbf4d","web":"1:339794104760:web:66f81a1213168e1b1bbf4d","windows":"1:339794104760:web:d226e8bf86bbb3771bbf4d"}}}}}}
+{
+  "flutter": {
+    "platforms": {
+      "android": {
+        "default": {
+          "projectId": "airguardfire",
+          "appId": "1:339794104760:android:8853b9c09e0d0b7a1bbf4d",
+          "fileOutput": "android/app/google-services.json"
+        }
+      },
+      "dart": {
+        "lib/firebase_options.dart": {
+          "projectId": "airguardfire",
+          "configurations": {
+            "android": "1:339794104760:android:8853b9c09e0d0b7a1bbf4d",
+            "ios": "1:339794104760:ios:e5c2ba816967b2011bbf4d",
+            "macos": "1:339794104760:ios:e5c2ba816967b2011bbf4d",
+            "web": "1:339794104760:web:66f81a1213168e1b1bbf4d",
+            "windows": "1:339794104760:web:d226e8bf86bbb3771bbf4d"
+          }
+        }
+      }
+    }
+  },
+  "emulators": {
+    "dataconnect": {
+      "dataDir": "dataconnect/.dataconnect/pgliteData"
+    }
+  },
+  "dataconnect": {
+    "source": "dataconnect"
+  }
+}

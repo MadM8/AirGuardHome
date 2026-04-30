@@ -258,7 +258,10 @@ class _DeviceCardState extends State<_DeviceCard> {
 
                 final data = Map<dynamic, dynamic>.from(
                     snapshot.data!.snapshot.value as Map);
-                final sensor = SensorData.fromMap(data);
+
+                // DHT22 data is nested under 'dht22' key
+                final dht22 = Map<dynamic, dynamic>.from(data['dht22'] ?? {});
+                final sensor = SensorData.fromMap(dht22);
 
                 return Padding(
                   padding: const EdgeInsets.all(16),
@@ -274,9 +277,7 @@ class _DeviceCardState extends State<_DeviceCard> {
                         children: [
                           _ReadingChip(
                             label: 'Temperature',
-                            value:
-                                '${sensor.temperature.toStringAsFixed(1)}°C',
-                            icon: Icons.thermostat,
+                            value: '${sensor.temperature.toStringAsFixed(1)}°C\n${(sensor.temperature * 9 / 5 + 32).toStringAsFixed(1)}°F',                            icon: Icons.thermostat,
                             color: Colors.orange,
                           ),
                           const SizedBox(width: 8),

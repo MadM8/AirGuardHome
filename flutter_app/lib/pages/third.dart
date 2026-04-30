@@ -111,10 +111,13 @@ class _ThermostatState extends State<Thermostat>
         builder: (context, snapshot) {
           // Update local state when new Firebase data arrives
           if (snapshot.hasData && snapshot.data?.snapshot.value != null) {
-            final map = Map<dynamic, dynamic>.from(
-                snapshot.data!.snapshot.value as Map);
-            final tempC = (map['temperature'] ?? 0).toDouble();
-            final humidity = (map['humidity'] ?? 45).toDouble();
+          final map = Map<dynamic, dynamic>.from(
+              snapshot.data!.snapshot.value as Map);
+
+          // DHT22 data is nested under 'dht22' key
+          final dht22 = Map<dynamic, dynamic>.from(map['dht22'] ?? {});
+          final tempC = (dht22['temperature'] ?? 0).toDouble();
+          final humidity = (dht22['humidity'] ?? 45).toDouble();
 
             // Schedule state update after build
             WidgetsBinding.instance.addPostFrameCallback((_) {

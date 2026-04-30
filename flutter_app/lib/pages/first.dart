@@ -71,6 +71,11 @@ class Home extends StatelessWidget {
     return StreamBuilder(
       stream: FirebaseDatabase.instance.ref('/airguard').onValue,
       builder: (context, snapshot) {
+            // ── DEBUG PRINTS ──
+        print(' Connection state: ${snapshot.connectionState}');
+        print(' Has data: ${snapshot.hasData}');
+        print(' Error: ${snapshot.error}');
+        print(' Value: ${snapshot.data?.snapshot.value}');
         // Loading state
         if (snapshot.connectionState == ConnectionState.waiting) {
           return const Center(child: CircularProgressIndicator());
@@ -97,14 +102,20 @@ class Home extends StatelessWidget {
         }
 
         // Parse Firebase data
+        // Parse Firebase data
         final map = Map<dynamic, dynamic>.from(
             snapshot.data!.snapshot.value as Map);
 
+        // DHT22 data is nested under 'dht22' key
+        final dht22 = Map<dynamic, dynamic>.from(map['dht22'] ?? {});
+
         final data = SensorData(
-          radon: (map['radon'] ?? 0).toDouble(),       // placeholder until radon sensor added
-          temperature: (map['temperature'] ?? 0).toDouble(),
-          humidity: (map['humidity'] ?? 0).toDouble(),
+          radon: 0,
+          temperature: (dht22['temperature'] ?? 0).toDouble(),
+          humidity: (dht22['humidity'] ?? 0).toDouble(),
           updatedAt: DateTime.now(),
+
+
         );
 
         return _HomeView(data: data);
@@ -210,12 +221,12 @@ class _HomeView extends StatelessWidget {
                 child: _card(
               accent: const Color(0xFFFF9F43),
               child: _metricTile(
-                  Icons.thermostat_rounded,
-                  'TEMPERATURE',
-                  '${data.temperature.toStringAsFixed(1)}°C',
-                  (data.temperature - 10) / 30,
-                  const Color(0xFFFF9F43),
-                  'Normal range'),
+                      Icons.thermostat_rounded,
+              'TEMPERATURE',
+              '${data.temperature.toStringAsFixed(1)}°C  |  ${(data.temperature * 9 / 5 + 32).toStringAsFixed(1)}°F',
+              (data.temperature - 10) / 30,
+              const Color(0xFFFF9F43),
+              'Normal range'),
             )),
             const SizedBox(width: 16),
             Expanded(
